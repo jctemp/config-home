@@ -132,8 +132,22 @@
       userSettings =
         (builtins.fromJSON (builtins.readFile ./settings/vscode.json))
         // {
-          "terminal.integrated.defaultProfile.windows" = "${pkgs.bashInteractive}/bin/bash";
+          "terminal.integrated.defaultProfile.linux" = "bash";
+          "terminal.integrated.profiles.linux" = {
+            "bash" = {
+              "path" = "${pkgs.bashInteractive}/bin/bash";
+              "icon" = "terminal-bash";
+            };
+          };
         };
+    };
+
+    zellij = {
+      enable = true;
+      enableBashIntegration = true;
+      settings = {
+        simplified_ui = true;
+      };
     };
 
     home-manager.enable = true;
