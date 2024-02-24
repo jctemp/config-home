@@ -12,6 +12,7 @@
       google-chrome
       keepassxc
       spotify
+      nvim
 
       # Development
       lldb

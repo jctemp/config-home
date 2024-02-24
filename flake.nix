@@ -12,12 +12,21 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    config-nixvim = {
+      url = "github:jctemp/config-nixvim";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
   outputs = inputs @ {self, ...}:
     inputs.flake-utils.lib.eachDefaultSystem (system: let
+      overlays = [
+        (final: prev: {
+          nvim = inputs.config-nixvim.packages.${system}.default;
+        })
+      ];
       pkgs = import inputs.nixpkgs {
-        inherit system;
+        inherit system overlays;
         config.allowUnfree = true;
       };
       username = "temple";
