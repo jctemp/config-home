@@ -15,6 +15,10 @@
         source = ./settings/fx-settings.yaml;
       };
     };
+
+    shellAliases = {
+      code = "codium";
+    };
   };
 
   programs = {
@@ -83,26 +87,38 @@
 
     vscode = {
       enable = true;
-      extensions = with pkgs; [
-        vscode-extensions.christian-kohler.path-intellisense
-        vscode-extensions.github.copilot
-        vscode-extensions.jnoortheen.nix-ide
-        vscode-extensions.mkhl.direnv
-        vscode-extensions.ms-pyright.pyright
-        vscode-extensions.ms-python.black-formatter
-        vscode-extensions.ms-python.python
-        vscode-extensions.ms-python.vscode-pylance
-        vscode-extensions.ms-toolsai.jupyter
-        vscode-extensions.ms-toolsai.jupyter-renderers
-        vscode-extensions.ms-toolsai.vscode-jupyter-cell-tags
-        vscode-extensions.ms-toolsai.vscode-jupyter-slideshow
-        vscode-extensions.ms-vscode-remote.remote-containers
-        vscode-extensions.ms-vscode-remote.remote-ssh
-        vscode-extensions.ms-vsliveshare.vsliveshare
-        vscode-extensions.njpwerner.autodocstring
-        vscode-extensions.nvarner.typst-lsp
-        vscode-extensions.yzhang.markdown-all-in-one
-        vscode-extensions.zhuangtongfa.material-theme
+      package = pkgs.vscodium;
+      extensions = with pkgs.vscode-extensions; [
+        christian-kohler.path-intellisense
+        mkhl.direnv
+        ms-vscode-remote.remote-containers
+        ms-vscode-remote.remote-ssh
+        ms-vscode.live-server
+        ms-vsliveshare.vsliveshare
+        zhuangtongfa.material-theme
+
+        ecmel.vscode-html-css
+        golang.go
+        haskell.haskell
+        jnoortheen.nix-ide
+        mads-hartmann.bash-ide-vscode
+        ms-azuretools.vscode-docker
+        ms-python.python
+        ms-python.vscode-pylance
+        ms-toolsai.jupyter
+        ms-toolsai.jupyter-renderers
+        ms-toolsai.vscode-jupyter-cell-tags
+        ms-toolsai.vscode-jupyter-slideshow
+        ms-vscode.cmake-tools
+        ms-vscode.cpptools
+        njpwerner.autodocstring
+        nvarner.typst-lsp
+        ocamllabs.ocaml-platform
+        rust-lang.rust-analyzer
+        serayuzgur.crates
+        tamasfe.even-better-toml
+        yzhang.markdown-all-in-one
+        ziglang.vscode-zig
       ];
       mutableExtensionsDir = true;
       userSettings =

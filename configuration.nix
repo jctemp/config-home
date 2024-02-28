@@ -33,12 +33,11 @@
       ocamlPackages.ocaml-lsp
       ocamlPackages.reason
       opam
+      ocaml
       python311Packages.python-lsp-server
       rust-analyzer
       swiProlog
       taplo
-      texlab
-      texlab
       typst-lsp
       yaml-language-server
       zls
