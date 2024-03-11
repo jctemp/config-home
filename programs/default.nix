@@ -134,13 +134,13 @@
         };
     };
 
-    # zellij = {
-    #   enable = true;
-    #   enableBashIntegration = true;
-    #   settings = {
-    #     simplified_ui = true;
-    #   };
-    # };
+    zellij = {
+      enable = true;
+      enableBashIntegration = true;
+      settings = {
+        simplified_ui = true;
+      };
+    };
 
     home-manager.enable = true;
   };

@@ -22,5 +22,6 @@
   ],
   "workbench.colorCustomizations": {
     "editorRuler.foreground": "#ff4081"
-  }
+  },
+  "python.languageServer": "Default"
 }

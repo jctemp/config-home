@@ -62,6 +62,7 @@
             nix fmt --no-write-lock-file
             home-manager switch --flake .#''${username}
           '')
+          home-manager
           alejandra
           deadnix
           nil
