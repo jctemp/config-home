@@ -16,9 +16,9 @@
       };
     };
 
-    shellAliases = {
-      code = "codium";
-    };
+    # shellAliases = {
+    #   code = "codium";
+    # };
   };
 
   programs = {
@@ -87,7 +87,7 @@
 
     vscode = {
       enable = true;
-      package = pkgs.vscodium;
+      # package = pkgs.vscodium;
       extensions = with pkgs.vscode-extensions; [
         christian-kohler.path-intellisense
         mkhl.direnv
