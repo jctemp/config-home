@@ -24,7 +24,7 @@
       obsidian
       typst
       zotero
-      gdrive3
+      rclone
     ];
   };
 
