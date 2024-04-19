@@ -12,6 +12,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # cannot follow nixpkgs because it requires stable branch
     config-nixvim = {
       url = "github:jctemp/config-nixvim";
       inputs.flake-utils.follows = "flake-utils";

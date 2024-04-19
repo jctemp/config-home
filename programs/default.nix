@@ -7,6 +7,25 @@
       feh
       felix-fm
       zoxide
+
+      # Development
+      lldb
+      clang-tools
+      cmake-language-server
+      dockerfile-language-server-nodejs
+      gopls
+      haskell-language-server
+      marksman
+      nil
+      nodePackages.bash-language-server
+      nodePackages.typescript-language-server
+      nodePackages.vscode-langservers-extracted
+      python311Packages.python-lsp-server
+      rust-analyzer
+      taplo
+      typst-lsp
+      yaml-language-server
+      zls
     ];
 
     file = {
@@ -15,10 +34,6 @@
         source = ./settings/fx-settings.yaml;
       };
     };
-
-    # shellAliases = {
-    #   code = "codium";
-    # };
   };
 
   programs = {
@@ -90,35 +105,18 @@
       # package = pkgs.vscodium;
       extensions = with pkgs.vscode-extensions; [
         christian-kohler.path-intellisense
+        ecmel.vscode-html-css
+        jnoortheen.nix-ide
+        mads-hartmann.bash-ide-vscode
         mkhl.direnv
+        ms-azuretools.vscode-docker
         ms-vscode-remote.remote-containers
         ms-vscode-remote.remote-ssh
         ms-vscode.live-server
         ms-vsliveshare.vsliveshare
-        zhuangtongfa.material-theme
-
-        ecmel.vscode-html-css
-        golang.go
-        haskell.haskell
-        jnoortheen.nix-ide
-        mads-hartmann.bash-ide-vscode
-        ms-azuretools.vscode-docker
-        ms-python.python
-        ms-python.vscode-pylance
-        ms-toolsai.jupyter
-        ms-toolsai.jupyter-renderers
-        ms-toolsai.vscode-jupyter-cell-tags
-        ms-toolsai.vscode-jupyter-slideshow
-        ms-vscode.cmake-tools
-        ms-vscode.cpptools
-        njpwerner.autodocstring
         nvarner.typst-lsp
-        ocamllabs.ocaml-platform
-        rust-lang.rust-analyzer
-        serayuzgur.crates
         tamasfe.even-better-toml
         yzhang.markdown-all-in-one
-        ziglang.vscode-zig
       ];
       mutableExtensionsDir = true;
       userSettings =
