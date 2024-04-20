@@ -22,17 +22,17 @@
           Wants = ["network-online.target"];
         };
         Service = {
-          Type = "exec";
           ExecStart = ''
             ${pkgs.rclone}/bin/rclone mount \
-              --vfs-cache-mode full \
-              --vfs-cache-max-size 50G \
-              --vfs-read-ahead 256M \
-              --buffer-size 16M \
-              --daemon \
-              drive: ~/Drive
+              --config /home/${username}/.config/rclone/rclone.conf \
+              --transfers 32 \
+              --allow-other \
+              drive: /home/${username}/Drive
           '';
-          Restart = "on-failure";
+          ExecStop = ''
+            ${pkgs.fuse}/bin/fusermount -u /home/${username}/Drive
+          '';
+          Restart = "always";
           RestartSec = "5s";
         };
         Install = {
@@ -47,7 +47,12 @@
         };
         Service = {
           Type = "oneshot";
-          ExecStart = "${pkgs.rclone}/bin/rclone sync ~/Drive drive:";
+          ExecStart = ''
+            ${pkgs.rclone}/bin/rclone sync \
+              --fast-list \
+              --transfers 32 \
+              drive: /home/${username}/Drive
+          '';
           Restart = "on-failure";
           RestartSec = "5s";
         };
@@ -63,7 +68,12 @@
         };
         Service = {
           Type = "oneshot";
-          ExecStart = "${pkgs.rclone}/bin/rclone copy --fast-list --transfers 32 drive: ~/Backup";
+          ExecStart = ''
+            ${pkgs.rclone}/bin/rclone copy \
+              --fast-list \
+              --transfers 32 \
+              drive: /home/${username}/Backup
+          '';
           Restart = "on-failure";
           RestartSec = "5s";
         };
