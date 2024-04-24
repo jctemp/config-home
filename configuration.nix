@@ -24,7 +24,7 @@
       obsidian
       typst
       zotero
-      rclone
+      pdfannots2json
     ];
   };
 
