@@ -24,13 +24,11 @@
       obsidian
       typst
       zotero
-      pdfannots2json
     ];
   };
 
   services.syncthing = {
     enable = true;
-    tray.enable = true;
     extraOptions = [];
   };
 

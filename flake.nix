@@ -51,7 +51,7 @@
           '')
           (writeShellScriptBin "update" ''
             nix fmt --no-write-lock-file
-            nix flake update --commit-lock-file
+            nix flake update
           '')
           (writeShellScriptBin "upgrade" ''
             if [ -z "$1" ]; then

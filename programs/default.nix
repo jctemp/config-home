@@ -5,27 +5,12 @@
       bat
       chafa
       feh
-      felix-fm
-      zoxide
 
       # Development
       lldb
       clang-tools
-      cmake-language-server
-      dockerfile-language-server-nodejs
-      gopls
-      haskell-language-server
       marksman
       nil
-      nodePackages.bash-language-server
-      nodePackages.typescript-language-server
-      nodePackages.vscode-langservers-extracted
-      python311Packages.python-lsp-server
-      rust-analyzer
-      taplo
-      typst-lsp
-      yaml-language-server
-      zls
     ];
 
     file = {
@@ -109,12 +94,9 @@
         jnoortheen.nix-ide
         mads-hartmann.bash-ide-vscode
         mkhl.direnv
-        ms-azuretools.vscode-docker
-        ms-vscode-remote.remote-containers
-        ms-vscode-remote.remote-ssh
         ms-vscode.live-server
-        ms-vsliveshare.vsliveshare
         nvarner.typst-lsp
+        pkief.material-icon-theme
         tamasfe.even-better-toml
         yzhang.markdown-all-in-one
       ];
