@@ -12,22 +12,12 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # cannot follow nixpkgs because it requires stable branch
-    config-nixvim = {
-      url = "github:jctemp/config-nixvim";
-      inputs.flake-utils.follows = "flake-utils";
-    };
   };
 
   outputs = inputs @ {self, ...}:
     inputs.flake-utils.lib.eachDefaultSystem (system: let
-      overlays = [
-        (final: prev: {
-          nvim = inputs.config-nixvim.packages.${system}.default;
-        })
-      ];
       pkgs = import inputs.nixpkgs {
-        inherit system overlays;
+        inherit system;
         config.allowUnfree = true;
       };
       username = "temple";
@@ -43,32 +33,34 @@
           modules = ["${self}/configuration.nix"];
         };
       };
-      devShells.default = pkgs.mkShell {
-        packages = with pkgs; [
-          (writeShellScriptBin "check" ''
-            nix fmt --no-write-lock-file
-            home-manager build --flake . --dry-run --print-build-logs
-          '')
-          (writeShellScriptBin "update" ''
-            nix fmt --no-write-lock-file
-            nix flake update
-          '')
-          (writeShellScriptBin "upgrade" ''
-            if [ -z "$1" ]; then
-              username=$(whoami)
-            else
-              username=$1
-            fi
+      devShells = {
+        default = pkgs.mkShell {
+          packages = with pkgs; [
+            (writeShellScriptBin "check" ''
+              nix fmt --no-write-lock-file
+              home-manager build --flake . --dry-run --print-build-logs
+            '')
+            (writeShellScriptBin "update" ''
+              nix fmt --no-write-lock-file
+              nix flake update
+            '')
+            (writeShellScriptBin "upgrade" ''
+              if [ -z "$1" ]; then
+                username=$(whoami)
+              else
+                username=$1
+              fi
 
-            nix fmt --no-write-lock-file
-            home-manager switch --flake .#''${username}
-          '')
-          home-manager
-          alejandra
-          deadnix
-          nil
-          statix
-        ];
+              nix fmt --no-write-lock-file
+              home-manager switch --flake .#''${username}
+            '')
+            home-manager
+            alejandra
+            deadnix
+            nil
+            statix
+          ];
+        };
       };
     });
 }
