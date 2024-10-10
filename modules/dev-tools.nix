@@ -37,6 +37,7 @@
           };
           editor.file-picker = {
             hidden = false;
+            ignored = [ ".direnv" ];
           };
         };
 
