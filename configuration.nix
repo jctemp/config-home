@@ -1,8 +1,4 @@
-{
-  pkgs,
-  variables,
-  ...
-}: {
+{variables, ...}: {
   imports = [
     ./modules/misc.nix
     ./modules/terminal.nix

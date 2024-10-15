@@ -38,13 +38,7 @@
       };
       devShells = {
         default = pkgs.mkShell {
-          packages = with pkgs; [
-            home-manager
-            deadnix
-            nil
-            statix
-            just
-          ];
+          packages = import "${inputs.self}/scripts.nix" pkgs;
         };
       };
     });
