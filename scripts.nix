@@ -1,20 +1,20 @@
 pkgs: [
   (pkgs.writeShellScriptBin "overview" ''
-    echo "Available commands"
-    echo "  fmt:"
-    echo "    Format Nix files without writing a lock file"
-    echo "  check"
-    echo "    Run statix and deadnix"
-    echo "  mend:"
-    echo "    Attempt to automatically fix issues found by statix"
-    echo "  test:"
-    echo "    Perform a dry run build"
-    echo "  update:"
-    echo "    Format and update flake inputs"
-    echo "  upgrade:"
-    echo "    Format and switch to the new Home Manager configuration"
-    echo "  clean:"
-    echo "    Remove result symlink and other build artifacts"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "Available commands"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "  fmt:"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "    Format Nix files without writing a lock file"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "  check"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "    Run statix and deadnix"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "  mend:"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "    Attempt to automatically fix issues found by statix"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "  test:"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "    Perform a dry run build"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "  update:"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "    Format and update flake inputs"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "  upgrade:"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "    Format and switch to the new Home Manager configuration"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "  clean:"
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo "    Remove result symlink and other build artifacts"
   '')
 
   (pkgs.writeShellScriptBin "fmt" ''
@@ -47,16 +47,17 @@ pkgs: [
     local user=$1
 
     if [ -z $user ]; then
-      user=$(whoami)
+      user=$(${pkgs.uutils-coreutils-noprefix}/bin/whoami)
     fi
-    echo Running home-manager for $user
+    ${pkgs.uutils-coreutils-noprefix}/bin/echo Running home-manager for $user
 
     ${pkgs.nix}/bin/nix fmt --no-write-lock-file
     ${pkgs.home-manager}/bin/home-manager switch --flake .#$user
   '')
 
   (pkgs.writeShellScriptBin "clean" ''
-    rm -f result
-    nix-collect-garbage -d
+    ${pkgs.uutils-coreutils-noprefix}/bin/rm -f result
+    ${pkgs.nix}/bin/nix-collect-garbage -d
   '')
+
 ]
