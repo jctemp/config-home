@@ -84,9 +84,7 @@
             {
               name = "nix";
               language-servers = ["nixd"];
-              formatter = {
-                command = "${pkgs.alejandra}/bin/alejandra";
-              };
+              formatter = {command = "${pkgs.alejandra}/bin/alejandra";};
             }
             {
               name = "python";
@@ -98,6 +96,7 @@
             }
             {
               name = "rust";
+              formatter = {command = "${pkgs.rustfmt}/bin/rustfmt";};
               persistent-diagnostic-sources = [
                 "${pkgs.rustc}/bin/rustc"
                 "${pkgs.clippy}/bin/clippy"

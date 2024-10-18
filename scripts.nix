@@ -45,7 +45,7 @@ pkgs: [
     ${pkgs.uutils-coreutils-noprefix}/bin/echo Running home-manager for $user
 
     ${pkgs.nix}/bin/nix fmt --no-write-lock-file
-    ${pkgs.home-manager}/bin/home-manager switch --flake .#$user
+    ${pkgs.home-manager}/bin/home-manager switch --refresh --flake .#$user
   '')
 
   (pkgs.writeShellScriptBin "clean" ''
