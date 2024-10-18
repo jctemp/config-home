@@ -37,8 +37,9 @@
         };
       };
       devShells = {
-        default = pkgs.mkShell {
+        default = pkgs.mkShellNoCC {
           packages = import "${inputs.self}/scripts.nix" pkgs;
+          shellHook = "overview";
         };
       };
     });
