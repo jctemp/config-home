@@ -42,7 +42,6 @@
 
         languages = {
           language-server = {
-            nixd = {command = "${pkgs.nixd}/bin/nixd";};
             yaml-language-server = {
               command = "${pkgs.yaml-language-server}/bin/yaml-language-server";
               args = ["--stdio"];
@@ -71,6 +70,15 @@
               command = "${pkgs.docker-compose-language-service}/bin/docker-compose-langserver";
               args = ["--stdio"];
             };
+            # Programming
+            nixd = {command = "${pkgs.nixd}/bin/nixd";};
+            ruff = {
+              command = "${pkgs.ruff}/bin/ruff";
+              args = ["server"];
+            };
+            rust-analyzer = {command = "${pkgs.rust-analyzer}/bin/rust-analyzer";};
+            tinymist = {command = "${pkgs.tinymist}/bin/tinymist";};
+            zls = {command = "${pkgs.zls}/bin/zls";};
           };
           language = [
             {
@@ -78,6 +86,35 @@
               language-servers = ["nixd"];
               formatter = {
                 command = "${pkgs.alejandra}/bin/alejandra";
+              };
+            }
+            {
+              name = "python";
+              language-servers = ["ruff"];
+              formatter = {
+                command = "${pkgs.ruff}/bin/ruff";
+                args = ["format" "--silent" "-"];
+              };
+            }
+            {
+              name = "rust";
+              persistent-diagnostic-sources = [
+                "${pkgs.rustc}/bin/rustc"
+                "${pkgs.clippy}/bin/clippy"
+              ];
+            }
+            {
+              name = "typst";
+              formatter = {
+                command = "${pkgs.typstyle}/bin/typstyle";
+                args = ["format" "-"];
+              };
+            }
+            {
+              name = "zig";
+              formatter = {
+                command = "${pkgs.zig}/bin/zig";
+                args = ["fmt" "--stdin"];
               };
             }
           ];
