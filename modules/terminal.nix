@@ -3,19 +3,27 @@
   lib,
   pkgs,
   inputs,
-  variables,
+  theme,
   ...
 }: {
-  options.module.terminal.enable =
-    lib.mkEnableOption
-    "Enable the terminal module";
+  options.module.terminal = {
+    enable =
+      lib.mkEnableOption
+      "Enable the terminal module";
+    emulator.enable = lib.mkOption {
+      default = true;
+      defaultText = "true";
+      description = "Enable terminal emulator";
+      type = lib.types.bool;
+    };
+  };
 
   config = lib.mkIf config.module.terminal.enable {
     programs = let
       alacrittyTheme = import "${inputs.self}/themes/alacritty.nix";
       zellijTheme = import "${inputs.self}/themes/zellij.nix";
     in {
-      alacritty = {
+      alacritty = lib.mkIf config.module.terminal.emulator.enable {
         enable = true;
         settings = {
           window.padding = {
@@ -23,7 +31,7 @@
             y = 5;
           };
           scrolling.history = 10000;
-          colors = builtins.getAttr variables.theme alacrittyTheme.themes;
+          colors = builtins.getAttr theme alacrittyTheme.themes;
         };
       };
 
@@ -47,7 +55,7 @@
         enable = true;
         enableBashIntegration = true;
         settings = {
-          inherit (variables) theme;
+          inherit theme;
           inherit (zellijTheme) themes;
           simplified_ui = true;
           copy_command = "${pkgs.xclip}/bin/xclip -selection clipboard";

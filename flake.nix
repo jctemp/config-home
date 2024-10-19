@@ -20,22 +20,25 @@
         inherit system;
         config.allowUnfree = true;
       };
-      extraSpecialArgs = {
-        inherit inputs;
-        variables = {
-          username = "temple";
-          stateVersion = "23.11";
-          theme = "rosePine";
-        };
-      };
+      mkProfile = (import ./lib.nix inputs).makeProfile pkgs;
     in {
       formatter = pkgs.alejandra;
-      packages.homeConfigurations = {
-        ${extraSpecialArgs.variables.username} = inputs.home-manager.lib.homeManagerConfiguration {
-          inherit pkgs extraSpecialArgs;
-          modules = ["${inputs.self}/configuration.nix"];
-        };
-      };
+      packages.homeConfigurations = builtins.listToAttrs [
+        (
+          mkProfile "temple" {
+            inherit inputs;
+            stateVersion = "23.11";
+            theme = "rosePine";
+          }
+        )
+        (
+          mkProfile "operator" {
+            inherit inputs;
+            stateVersion = "23.11";
+            theme = "rosePine";
+          }
+        )
+      ];
       devShells = {
         default = pkgs.mkShellNoCC {
           packages = import "${inputs.self}/scripts.nix" pkgs;

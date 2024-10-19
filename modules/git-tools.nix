@@ -3,7 +3,7 @@
   lib,
   pkgs,
   inputs,
-  variables,
+  theme,
   ...
 }: {
   options.module.git-tools.enable =
@@ -58,7 +58,7 @@
       gitui = {
         enable = true;
         keyConfig = gituiSettings;
-        theme = builtins.getAttr variables.theme gituiTheme.themes;
+        theme = builtins.getAttr theme gituiTheme.themes;
       };
     };
   };

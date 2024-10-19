@@ -3,7 +3,7 @@
   lib,
   pkgs,
   inputs,
-  variables,
+  theme,
   ...
 }: {
   options.module.dev-tools.enable =
@@ -24,7 +24,7 @@
         enable = true;
         defaultEditor = true;
         settings = {
-          theme = builtins.getAttr variables.theme helixTheme.themes;
+          theme = builtins.getAttr theme helixTheme.themes;
           editor = {
             line-number = "absolute";
             true-color = true;
