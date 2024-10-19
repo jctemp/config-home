@@ -34,6 +34,7 @@
           editor.lsp = {
             enable = true;
             display-messages = true;
+            display-inlay-hints = true;
           };
           editor.file-picker = {
             hidden = false;
@@ -71,16 +72,32 @@
               args = ["--stdio"];
             };
             # Programming
-            nixd = {command = "${pkgs.nixd}/bin/nixd";};
-            ruff = {
-              command = "${pkgs.ruff}/bin/ruff";
-              args = ["server"];
+            clangd = {command = "${pkgs.clang-tools}/bin/clangd";};
+            gleam = {
+              command = "${pkgs.gleam}/bin/gleam";
+              args = ["lsp"];
             };
+            nixd = {command = "${pkgs.nixd}/bin/nixd";};
+            pylsp = {command = "${pkgs.python312Packages.python-lsp-server}/bin/pylsp";};
             rust-analyzer = {command = "${pkgs.rust-analyzer}/bin/rust-analyzer";};
             tinymist = {command = "${pkgs.tinymist}/bin/tinymist";};
             zls = {command = "${pkgs.zls}/bin/zls";};
           };
-          language = [
+
+          language = let
+            formatter = {
+              command = "${pkgs.clang-tools}/bin/clang-format";
+              args = ["-style=file" "-assume-filename=%f"];
+            };
+          in [
+            {
+              name = "c";
+              inherit formatter;
+            }
+            {
+              name = "cpp";
+              inherit formatter;
+            }
             {
               name = "nix";
               language-servers = ["nixd"];
@@ -88,7 +105,7 @@
             }
             {
               name = "python";
-              language-servers = ["ruff"];
+              language-servers = ["pylsp"];
               formatter = {
                 command = "${pkgs.ruff}/bin/ruff";
                 args = ["format" "--silent" "-"];
@@ -98,6 +115,7 @@
               name = "rust";
               formatter = {command = "${pkgs.rustfmt}/bin/rustfmt";};
               persistent-diagnostic-sources = [
+                pkgs.rustPlatform.rustLibSrc
                 "${pkgs.rustc}/bin/rustc"
                 "${pkgs.clippy}/bin/clippy"
               ];
