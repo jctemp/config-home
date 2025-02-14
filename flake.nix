@@ -2,7 +2,10 @@
   description = "Insane NixOS home configuration";
 
   nixConfig = {
-    experimental-features = ["nix-command" "flakes"];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 
   inputs = {
@@ -14,36 +17,37 @@
     };
   };
 
-  outputs = inputs:
-    inputs.flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import inputs.nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
+  outputs =
+    inputs:
+    let
+      userSpec = {
+        name = "nixos";
+        theme = "rose-pine";
+        graphicsSupport = true;
       };
-      mkProfile = (import ./lib.nix inputs).makeProfile pkgs;
-    in {
-      formatter = pkgs.alejandra;
-      packages.homeConfigurations = builtins.listToAttrs [
-        (
-          mkProfile "temple" {
-            inherit inputs;
-            stateVersion = "23.11";
-            theme = "rosePine";
-          }
-        )
-        (
-          mkProfile "operator" {
-            inherit inputs;
-            stateVersion = "23.11";
-            theme = "rosePine";
-          }
-        )
-      ];
-      devShells = {
-        default = pkgs.mkShellNoCC {
-          packages = import "${inputs.self}/scripts.nix" pkgs;
-          shellHook = "overview";
+    in
+    (inputs.flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import inputs.nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
         };
-      };
-    });
+      in
+      {
+        formatter = pkgs.alejandra;
+        packages.homeConfigurations = import ./config (inputs // { inherit userSpec; });
+        devShells.default = pkgs.mkShellNoCC {
+          name = "home config";
+          packages =
+            let
+              scriptsPkgs = pkgs.callPackage ./scripts { };
+            in
+            [
+              pkgs.home-manager
+              scriptsPkgs
+            ];
+        };
+      }
+    ));
 }

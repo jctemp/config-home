@@ -25,8 +25,8 @@ let
   '';
 in {
   themes = {
-    rosePine = createTheme colors.rosePine;
-    rosePineDawn = createTheme colors.rosePineDawn;
-    rosePineMoon = createTheme colors.rosePineMoon;
+    rose-pine = createTheme colors.rosePine;
+    rose-pine-dawn = createTheme colors.rosePineDawn;
+    rose-pine-moon = createTheme colors.rosePineMoon;
   };
 }
