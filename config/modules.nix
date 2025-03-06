@@ -10,6 +10,19 @@
 in
   lib.mkMerge [
     {
+      nixpkgs.config = {
+        allowUnfreePredicate = pkgs:
+          builtins.elem (lib.getName pkgs) [
+            "spotify"
+            "google-chrome"
+            "citrix_workspace_24_05_0"
+            "citrix-workspace"
+          ];
+        permittedInsecurePackages = [
+          "electron-27.3.11"
+        ];
+      };
+      # https://www.citrix.com/downloads/workspace-app/legacy-workspace-app-for-linux/workspace-app-for-linux-latest1.html
       home.packages = lib.mkIf cfg.graphicsSupport (
         with pkgs; [
           keepassxc
@@ -17,6 +30,8 @@ in
           zotero
           blender_4_3
           freecad
+          logseq
+          citrix_workspace_24_05_0
         ]
       );
 
